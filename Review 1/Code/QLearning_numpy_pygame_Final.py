@@ -16,8 +16,8 @@ Dependencies: numpy, pygame (pip install numpy pygame)
 """
 from __future__ import annotations
 import argparse
-import math
-import os
+# import math
+# import os
 import random
 from dataclasses import dataclass
 from typing import List, Tuple
