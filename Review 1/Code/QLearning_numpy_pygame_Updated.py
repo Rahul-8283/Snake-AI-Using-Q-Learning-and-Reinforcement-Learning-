@@ -133,6 +133,10 @@ class SnakeEnv:
             s |= (b & 1) << i
         return s
 
+# -----------------------------
+# 2) Q-LEARNING (Q-TABLE) AGENT
+# -----------------------------
+
 
 class QAgent:
     def __init__(self, n_states: int, n_actions: int, alpha=0.1, gamma=0.9, eps=1.0, eps_min=0.01, eps_decay=0.995):
@@ -158,6 +162,11 @@ class QAgent:
         self.eps = max(self.eps_min, self.eps * self.eps_decay)
 
 
+# -----------------------------
+# 3) TRAINING LOOP (NUMPY ONLY)
+# -----------------------------
+
+
 def train_q(env: SnakeEnv, episodes=2000, max_steps=2000, save_path="qtable.npy"):
     agent = QAgent(env.max_states, env.n_actions)
     scores = []
@@ -181,6 +190,9 @@ def train_q(env: SnakeEnv, episodes=2000, max_steps=2000, save_path="qtable.npy"
     print(f"Saved Q-table -> {save_path}")
     return agent
 
+# ---------------------------------------
+# 4) VISUALIZATION (PYGAME, NOT CURSES)
+# ---------------------------------------
 
 def play_with_qtable(env: SnakeEnv, q_path="qtable.npy", fps=12, cell=30):
     import pygame
@@ -222,6 +234,17 @@ def play_with_qtable(env: SnakeEnv, q_path="qtable.npy", fps=12, cell=30):
             pygame.time.delay(600)
             s = env.reset()
     pygame.quit()
+
+
+# ------------------------------------------------------------------
+# 5) EASY UPGRADE PATH TO DQN (PyTorch) — placeholder for extension
+# ------------------------------------------------------------------
+"""
+To move to DQN later:
+- Replace QAgent with a PyTorch model that approximates Q(s, a)
+- Keep the same env + experience loop; add replay buffer & target network
+- Keep pygame visualization as-is (it only needs env.step and env state)
+"""
 
 
 def parse_args():
